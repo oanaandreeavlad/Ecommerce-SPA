@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Planteria</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  
+</head>
+<body>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="jumbotron jumbotron-fluid ">
+                <h1 class="display-4 greenery">
+                    <b>Planteria</b>
+                    <small><span class="greenery" data-bind="text: subscriptionType"></span></small>
+                </h1>
+                <p class="lead">Invite nature into your daily routine with Planteria's® goodies subscriptions</p>
+            </div>
+        </div>
+
+        <div id="cards">
+            <div class="card-deck" data-bind="foreach: types">
+                <div class="card">
+                    <img class="card-img-top" data-bind="attr:{src: $data.ImageSource}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" data-bind=" text: $data.Name"></h5>
+                        <p class="card-text" data-bind="text: $data.Description"></p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="nav-link" data-target="#details" data-toggle="collapse" href="#" data-bind="click: $parent.getBySubscriptionType">Details</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="details" class="collapse">
+            <div>
+                <table class="table table-hover" data-bind="visible: subscriptions().length > 0">
+                    <thead class="theader">
+                        <tr>
+                            <th>Offer</th>
+                            <th></th>
+                            <th>Pricing</th>
+                            <th>Period</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: subscriptions">
+                        <tr>
+                            <td><span data-bind="text: Name"></span></td>
+                            <td><span data-bind="text: Description"></span></td>
+                            <td>
+                                <span data-bind="text: Price"></span>
+                                RON/Month
+                            </td>
+                            <td><span data-bind="text: SubscriptionDurationString"></span></td>
+                            <td><button class="btn " data-toggle="modal" data-target=".bd-example-modal-lg" data-bind="click: $parent.checkout.bind($data)">Choose</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p data-bind="visible: error, text: error" class="text-error"></p>
+            <h5 class="text-info" data-bind="visible: !error() && subscriptions().length == 0">It seems there are no available offers at the moment.</h5>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Subscription Checkout 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="display:normal" data-bind="foreach: checkoutSubscriptions">
+                        <i class="fa fa-leaf" aria-hidden="true"></i>
+                        <b><span data-bind="text: Name"></span></b>,
+                        <span data-bind="text: Description"></span>
+                        <div>
+                            <b class="greenery">Subscription Princing/Period: </b>
+                            <span data-bind="text: Price"></span> RON per Month/ 
+                            <span data-bind="text: SubscriptionDurationString"></span>
+                        </div>
+                        <hr />
+                        <br />
+                    </div>
+                    <button type="button" class="btn checkoutButton" >Fill subscription form</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <p>&copy;2021 Planteria - Oana Vlad</p>
+    </div>
+    <script src="AppScripts/jquery-2.0.3.js"></script>
+    <script src="AppScripts/knockout-2.3.0.js"></script>
+    <script src="AppScripts/knockout-2.3.0.debug.js"></script>
+    <script src="AppScripts/app.service.js"></script>
+    <script src="AppScripts/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<style>
+    body {
+        background-color: #FFFFFF;
+    }
+
+    .theader {
+        background-color: #cad1cd;
+    }
+
+    .greenery {
+        color: #4b6055;
+    }
+
+    #details{
+        padding-top:30px;
+    }
+
+    .checkoutButton {
+        float: right;
+        color: #384c41;
+        background-color: #cad1cd;
+    }
+
+.jumbotron { background-image: url("https://images.unsplash.com/photo-1488645411773-a3b09ea07e29?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1328&q=80"); background-size: cover; }
+</style>
